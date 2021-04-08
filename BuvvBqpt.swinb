@@ -1,0 +1,92 @@
+<div class="notebook">
+
+<div class="nb-cell markdown" name="md1">
+Задание 1
+</div>
+
+<div class="nb-cell markdown" name="md2">
+1)списки, кол-во  элементов больше 2 
+2)списки, кол-во &lt;=2
+</div>
+
+<div class="nb-cell program" name="p1">
+splitting1([],[]).
+splitting1([X|T],[X|T1]) :- is_list(X), length(X,Length), Length&gt;2, splitting1(T,T1).
+splitting1([_|T],T1):- splitting1(T,T1).
+
+splitting2([],[]).
+splitting2([X|T],[X|T1]) :- is_list(X), length(X,Length),not(Length&gt;2), splitting2(T,T1).
+splitting2([_|T],T1):- splitting2(T,T1).
+</div>
+
+<div class="nb-cell query" name="q1">
+L=[[],[1,2,8],12,12.5,"AintW ",[[1,2],3,4,5],-7,[12],0,"abc","a"], splitting1(L,A), splitting2(L,B), write(A),nl,write(B).
+</div>
+
+<div class="nb-cell markdown" name="md3">
+Задание 2
+</div>
+
+<div class="nb-cell program" name="p3">
+concat([],L,L).
+concat([X|Y],L2,[X|L]):- concat(Y,L2,L).
+
+filter1([],[]).
+filter1([X|T],[X|T1]):-is_of_type(integer,X), R is X mod 2, R==0, filter1(T,T1).
+filter1([_|T],T1):- filter1(T,T1).
+
+
+filter2([],[]).
+filter2([X|T],[X|T1]):-is_of_type(integer,X),R is X mod 2, R==1,filter2(T,T1).
+filter2([_|T],T1):-filter2(T,T1).
+</div>
+
+<div class="nb-cell query" name="q3">
+L1 = [[],[1,2,8],12 ,12.5,"AintW ",[[1,2],3,4,5],-7,[12],0,"abc","a"],
+L2= [12, 13 , 14,-11,-2, 5],
+filter1(L1,List1),filter2(L2,List2),concat(List1,List2,List3),write(List3).
+</div>
+
+<div class="nb-cell markdown" name="md5">
+Задание 3
+</div>
+
+<div class="nb-cell program" data-background="true" name="p5">
+getx(S1,S2,Step,[]):- S1+Step&gt;S2.
+getx(S1,S2,Step,[S1|T]):- S is S1+Step, getx(S,S2,Step,T).
+
+gety(_,[],[]).
+gety(A,[X|T],[Y|T1]):- W is X+A, Y is sqrt(W), gety(A,T,T1).
+
+get2(_,[],[]).
+get2(B,[X|T],[Y|T1]):- Q is X+B,  Y is sqrt(Q), get2(B,T,T1).
+
+:- use_rendering(c3).
+gr1(G,X,Y,Y1):- G= c3{data:_{x:x, columns:[[x|X],[y|Y], [y1|Y1]]}}.
+</div>
+
+<div class="nb-cell query" name="q5">
+S1=1, S2=10, Step=0.5, A=1, B=2,  getx(S1,S2,Step,X), gety(A,X,Y),get2(B,X,Y1), gr1(G,X,Y,Y1).
+</div>
+
+<div class="nb-cell markdown" name="md4">
+Задание 4
+</div>
+
+<div class="nb-cell program" name="p2">
+:- use_rendering(c3).
+group(481,"МатФак",67).
+group(482,"МатФак",89).
+group(483,"ФМКФиП",63).
+group(484,"ФМКФиП",70).
+group(485,"ЮрФак",81).
+
+
+gr2(G,L):-G = c3{data:_{columns:L, type: pie}}.
+</div>
+
+<div class="nb-cell query" name="q2">
+findall([X,Y],group(X,_,Y),L),gr2(G,L).
+</div>
+
+</div>
